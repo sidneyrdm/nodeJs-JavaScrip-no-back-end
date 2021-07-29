@@ -29,8 +29,11 @@ let route = app.route('/users');
         });  
     }); 
     
+    
     route.post((req, res)=>{
-        
+
+        if (!app.routes.utils.validator.user(app, req, res)) return false;
+
         db.insert(req.body, (err, user)=> {
             if(err){
                 app.utils.error.send(err, req, res);
@@ -39,6 +42,7 @@ let route = app.route('/users');
             }
         });
     });
+
   
     let routeId = app.route('/users/:id');
 
@@ -53,6 +57,9 @@ let route = app.route('/users');
     });
     
     routeId.put((req, res)=> {
+
+        if (!app.routes.utils.validator.user(app, req, res)) return false;
+
         db.update({_id:req.params.id}, req.body, err => {
             if(err){
                 app.utils.error.send(err, req, res);
@@ -61,6 +68,7 @@ let route = app.route('/users');
             }
         });
     });
+
     routeId.delete((req, res)=> {
         db.remove({_id:req.params.id}, {}, err => {
             if(err){
