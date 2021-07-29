@@ -32,7 +32,7 @@ let route = app.route('/users');
     
     route.post((req, res)=>{
 
-        if (!app.routes.utils.validator.user(app, req, res)) return false;
+        if (!app.utils.validator.user(app, req, res)) return false;
 
         db.insert(req.body, (err, user)=> {
             if(err){
@@ -58,7 +58,7 @@ let route = app.route('/users');
     
     routeId.put((req, res)=> {
 
-        if (!app.routes.utils.validator.user(app, req, res)) return false;
+        if (!app.utils.validator.user(app, req, res)) return false;
 
         db.update({_id:req.params.id}, req.body, err => {
             if(err){
